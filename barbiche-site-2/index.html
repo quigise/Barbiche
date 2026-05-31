@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barbiche — Barbershop à Montauroux | Venez pour la coupe, restez pour le fun</title>
+<meta name="description" content="Barbiche, barbershop & salon de coiffure à Montauroux. Coupe homme, femme, enfant, barbe, rasage. Ambiance conviviale, billard, jus de fruits frais. Prenez rendez-vous en ligne.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Fonts : Bebas Neue (display, percutant barbershop) + Fraunces (élégance vintage) + Outfit (corps moderne) -->
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  /* ===== CHARTE BARBICHE — couleurs échantillonnées sur les vraies photos du salon =====
+     Bleu canard (#426B7E réel, murs du salon) + bronze (#4D3929 réel, logo) */
+  /* Bleu canard (couleur réelle du mur du salon #4C838E — teinte 190°) */
+  --teal: #4C838E;
+  --teal-deep: #346069;
+  --teal-dark: #21454C;
+  --teal-light: #72A8B2;
+
+  /* Bronze / cuivre (le logo Barbiche réel #593A22 — brun-bronze chaud) */
+  --bronze: #92633E;
+  --bronze-light: #BC8E60;
+  --bronze-deep: #593A22;
+
+  /* Neutres */
+  --black: #0C1618;
+  --ink: #16282E;
+  --cream: #F2ECE0;
+  --cream-warm: #E9E0D0;
+  --white: #FFFFFF;
+  --sand: #D6C8B0;
+
+  --gray-soft: #6E7F7D;
+
+  /* Ombres */
+  --shadow-soft: 0 20px 50px -25px rgba(27, 57, 66, 0.4);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ===== NAVIGATION ===== */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: transparent;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav.scrolled {
+  background: rgba(12, 20, 20, 0.85);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 4px 30px rgba(10, 52, 52, 0.25);
+}
+
+.nav-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 32px;
+  max-width: 1280px;
+  margin: 0 auto;
+  transition: padding 0.3s ease;
+}
+
+.nav.scrolled .nav-inner { padding: 14px 32px; }
+
+/* Logo provisoire (placeholder en attendant le vrai fichier) */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.logo-full {
+  height: 52px;
+  width: auto;
+  display: block;
+  transition: height 0.3s ease;
+}
+
+.nav.scrolled .logo-full { height: 42px; }
+
+.nav-links {
+  display: flex;
+  gap: 34px;
+  align-items: center;
+}
+
+.nav-links a {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: rgba(244, 239, 230, 0.85);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover { color: var(--bronze-light); }
+
+.nav-cta {
+  background: var(--bronze);
+  color: var(--black) !important;
+  padding: 12px 24px;
+  border-radius: 100px;
+  font-weight: 600 !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 6px 18px -4px rgba(181, 133, 79, 0.5);
+}
+
+.nav-cta:hover {
+  background: var(--bronze-light);
+  transform: translateY(-2px);
+  color: var(--black) !important;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px;
+}
+
+.menu-toggle span {
+  width: 24px;
+  height: 2px;
+  background: var(--cream);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+/* ===== HERO ===== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal-deep) 55%, var(--teal) 100%);
+  overflow: hidden;
+}
+
+/* Texture de fond : lattes verticales (rappel du mur en bois du salon) */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 14px,
+    rgba(244, 239, 230, 0.025) 14px,
+    rgba(244, 239, 230, 0.025) 16px
+  );
+  pointer-events: none;
+}
+
+/* Halo bronze diffus */
+.hero::after {
+  content: '';
+  position: absolute;
+  top: -10%;
+  right: -5%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(181, 133, 79, 0.22) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 60px;
+  align-items: center;
+  width: 100%;
+}
+
+.hero-content {
+  padding: 120px 0 60px;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--bronze-light);
+  margin-bottom: 28px;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  width: 32px;
+  height: 1.5px;
+  background: var(--bronze);
+}
+
+.hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(56px, 9vw, 120px);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+  color: var(--cream);
+  margin-bottom: 28px;
+}
+
+.hero h1 .accent {
+  color: var(--bronze-light);
+  font-style: normal;
+}
+
+/* Le slogan en Fraunces italique pour le contraste élégant */
+.hero-slogan {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: clamp(20px, 2.6vw, 30px);
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 20px;
+  opacity: 0.95;
+}
+
+.hero-desc {
+  font-size: 17px;
+  line-height: 1.7;
+  color: rgba(244, 239, 230, 0.78);
+  max-width: 480px;
+  margin-bottom: 40px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 17px 34px;
+  border-radius: 100px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-primary {
+  background: var(--bronze);
+  color: var(--black);
+  box-shadow: 0 10px 30px -8px rgba(181, 133, 79, 0.6);
+}
+
+.btn-primary:hover {
+  background: var(--bronze-light);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px -10px rgba(181, 133, 79, 0.7);
+}
+
+.btn-ghost {
+  background: rgba(244, 239, 230, 0.08);
+  color: var(--cream);
+  border: 1px solid rgba(244, 239, 230, 0.25);
+  backdrop-filter: blur(10px);
+}
+
+.btn-ghost:hover {
+  background: rgba(244, 239, 230, 0.16);
+  border-color: rgba(244, 239, 230, 0.5);
+}
+
+/* Bloc visuel du hero (placeholder photo salon) */
+.hero-visual {
+  position: relative;
+  height: 560px;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 40px 80px -30px rgba(10, 52, 52, 0.7);
+  border: 1px solid rgba(244, 239, 230, 0.12);
+}
+
+.hero-visual-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Note d'avis (badge flottant) */
+.hero-rating {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  right: 24px;
+  background: rgba(12, 20, 20, 0.7);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(244, 239, 230, 0.15);
+  border-radius: 16px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hero-rating-stars {
+  color: var(--bronze-light);
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+
+.hero-rating-text {
+  color: var(--cream);
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.hero-rating-text strong {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  display: block;
+  color: var(--bronze-light);
+}
+
+/* ===== Animations ===== */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.fade-up-1 { animation-delay: 0.1s; }
+.fade-up-2 { animation-delay: 0.25s; }
+.fade-up-3 { animation-delay: 0.4s; }
+.fade-up-4 { animation-delay: 0.55s; }
+.fade-up-5 { animation-delay: 0.7s; }
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== SCROLL REVEAL ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.in { opacity: 1; transform: translateY(0); }
+
+/* ===== EN-TÊTE DE SECTION ===== */
+.section { padding: 120px 0; position: relative; }
+
+.section-head { max-width: 720px; margin: 0 auto 70px; text-align: center; }
+
+.section-eyebrow {
+  display: inline-block;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--bronze); margin-bottom: 18px;
+  position: relative; padding-bottom: 8px;
+}
+.section-eyebrow::after {
+  content: ''; position: absolute; bottom: 0; left: 50%;
+  transform: translateX(-50%); width: 36px; height: 2px; background: var(--bronze);
+}
+
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(40px, 6vw, 68px); font-weight: 400;
+  line-height: 1.0; letter-spacing: 0.01em; color: var(--ink);
+}
+.section-title .accent { color: var(--bronze); }
+
+.section-sub { font-size: 17px; line-height: 1.7; color: var(--gray-soft); margin-top: 20px; }
+
+/* ===== CONCEPT ===== */
+.concept { background: var(--cream); }
+.concept-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.concept-card {
+  background: var(--white); border-radius: 20px; padding: 36px 28px;
+  text-align: center; border: 1px solid rgba(89, 58, 34, 0.08);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+.concept-card:hover { transform: translateY(-6px); box-shadow: 0 24px 50px -24px rgba(27, 57, 66, 0.3); }
+.concept-icon {
+  width: 64px; height: 64px; margin: 0 auto 22px; border-radius: 18px;
+  background: linear-gradient(135deg, var(--teal) 0%, var(--teal-deep) 100%);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--cream); box-shadow: 0 10px 24px -8px rgba(76, 131, 142, 0.5);
+}
+.concept-card h3 { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 600; color: var(--ink); margin-bottom: 10px; }
+.concept-card p { font-size: 14.5px; line-height: 1.6; color: var(--gray-soft); }
+
+/* ===== PRESTATIONS ===== */
+.prestations { background: linear-gradient(180deg, var(--cream) 0%, var(--cream-warm) 100%); }
+
+.signature-card {
+  background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal-deep) 100%);
+  border-radius: 28px; padding: 48px; margin-bottom: 48px;
+  display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;
+  position: relative; overflow: hidden; box-shadow: 0 30px 70px -30px rgba(27, 57, 66, 0.6);
+}
+.signature-card::before {
+  content: ''; position: absolute; top: -30%; right: -10%;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(188, 142, 96, 0.25) 0%, transparent 65%); pointer-events: none;
+}
+.signature-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(188, 142, 96, 0.2); border: 1px solid rgba(188, 142, 96, 0.4);
+  color: var(--bronze-light); font-size: 12px; font-weight: 600;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 7px 16px; border-radius: 100px; margin-bottom: 20px;
+  position: relative; z-index: 1;
+}
+.signature-card h3 {
+  font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px, 5vw, 54px);
+  font-weight: 400; line-height: 1.0; color: var(--cream); margin-bottom: 16px;
+  position: relative; z-index: 1;
+}
+.signature-card p {
+  font-size: 16px; line-height: 1.7; color: rgba(242, 236, 224, 0.85);
+  max-width: 560px; margin-bottom: 8px; position: relative; z-index: 1;
+}
+.signature-detail { font-size: 14px !important; color: var(--bronze-light) !important; font-style: italic; }
+.signature-right { text-align: center; position: relative; z-index: 1; }
+.signature-price { font-family: 'Bebas Neue', sans-serif; font-size: 72px; line-height: 1; color: var(--bronze-light); }
+.signature-price span { font-size: 32px; }
+.signature-duration { font-size: 14px; color: rgba(242, 236, 224, 0.7); margin-bottom: 20px; }
+
+.presta-cats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+.presta-cat { background: var(--white); border-radius: 22px; padding: 34px; border: 1px solid rgba(89, 58, 34, 0.08); }
+.presta-cat h3 {
+  font-family: 'Bebas Neue', sans-serif; font-size: 28px; font-weight: 400;
+  letter-spacing: 0.04em; color: var(--teal-deep); margin-bottom: 22px;
+  padding-bottom: 14px; border-bottom: 2px solid rgba(76, 131, 142, 0.15);
+  display: flex; align-items: center; gap: 12px;
+}
+.presta-cat h3 svg { color: var(--bronze); }
+.presta-item {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+  padding: 13px 0; border-bottom: 1px dashed rgba(89, 58, 34, 0.12);
+}
+.presta-item:last-child { border-bottom: none; }
+.presta-item-info { flex: 1; }
+.presta-item-name { font-size: 15.5px; font-weight: 600; color: var(--ink); }
+.presta-item-desc { font-size: 13px; color: var(--gray-soft); margin-top: 2px; }
+.presta-item-price { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.03em; color: var(--bronze); white-space: nowrap; }
+.presta-item-dur { font-size: 12px; color: var(--gray-soft); white-space: nowrap; margin-left: 6px; }
+.presta-cta { text-align: center; margin-top: 48px; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+  .hero-visual { height: 420px; order: -1; }
+  .hero-content { padding: 110px 0 0; }
+  .nav-links { display: none; }
+  .menu-toggle { display: flex; }
+  .section { padding: 90px 0; }
+  .concept-grid { grid-template-columns: repeat(2, 1fr); }
+  .presta-cats { grid-template-columns: 1fr; }
+  .signature-card { grid-template-columns: 1fr; gap: 28px; text-align: center; padding: 40px 32px; }
+  .signature-card p { margin-left: auto; margin-right: auto; }
+}
+
+@media (max-width: 600px) {
+  .container { padding: 0 20px; }
+  .nav-inner { padding: 16px 20px; }
+  .logo-full { height: 40px; }
+  .nav.scrolled .logo-full { height: 34px; }
+  .hero h1 { font-size: clamp(48px, 16vw, 80px); }
+  .hero-actions { flex-direction: column; }
+  .btn { width: 100%; justify-content: center; }
+  .hero-visual { height: 360px; }
+  .section { padding: 70px 0; }
+  .section-head { margin-bottom: 48px; }
+  .concept-grid { grid-template-columns: 1fr; gap: 18px; }
+  .presta-cat { padding: 26px; }
+  .signature-price { font-size: 60px; }
+  .signature-card { padding: 32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== NAVIGATION ===== -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#hero" class="logo">
+      <img src="assets/logo-full-light.png" alt="Barbiche — Barber, Play, Fresh Juice" class="logo-full" />
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="#concept">Le concept</a>
+      <a href="#prestations">Prestations</a>
+      <a href="#galerie">Galerie</a>
+      <a href="#equipe">L'équipe</a>
+      <a href="#infos">Infos</a>
+      <a href="https://www.planity.com/barbiche-montauroux" target="_blank" rel="noopener" class="nav-cta">Prendre RDV</a>
+    </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <span class="hero-eyebrow fade-up fade-up-1">Barbershop · Montauroux</span>
+        <h1 class="fade-up fade-up-2">Venez pour<br>la coupe,<br><span class="accent">restez pour le fun.</span></h1>
+        <p class="hero-slogan fade-up fade-up-3">Bien plus qu'un simple salon de coiffure.</p>
+        <p class="hero-desc fade-up fade-up-3">Coupe, barbe, couleur, soins — dans une ambiance conviviale unique : billard, fléchettes, jus de fruits frais maison et bonne humeur garantie.</p>
+        <div class="hero-actions fade-up fade-up-4">
+          <a href="https://www.planity.com/barbiche-montauroux" target="_blank" rel="noopener" class="btn btn-primary">
+            Prendre rendez-vous
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M13 8l-4-4M13 8l-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#prestations" class="btn btn-ghost">Voir les prestations</a>
+        </div>
+      </div>
+      <div class="hero-visual fade-up fade-up-3">
+        <img src="assets/salon-enfant.jpg" alt="Coupe enfant chez Barbiche, ambiance bleu canard" class="hero-visual-img" />
+        <div class="hero-rating">
+          <span class="hero-rating-stars">★★★★★</span>
+          <div class="hero-rating-text">
+            <strong>4,9 / 5</strong>
+            Plus de 425 avis clients
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONCEPT ===== -->
+<section class="section concept" id="concept">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-eyebrow">Le concept</span>
+      <h2 class="section-title">Bien plus qu'un <span class="accent">barbershop</span></h2>
+      <p class="section-sub">Chez Barbiche, on vient pour la coupe et on reste pour le fun. Un concept store unique où le soin rencontre la convivialité.</p>
+    </div>
+    <div class="concept-grid">
+      <div class="concept-card reveal">
+        <div class="concept-icon">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a6 6 0 0 0 12 0M6 9V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4M9 21h6M12 15v6"/></svg>
+        </div>
+        <h3>Fresh Juice</h3>
+        <p>Jus de fruits frais maison et pâtisseries américaines offerts à chaque prestation.</p>
+      </div>
+      <div class="concept-card reveal">
+        <div class="concept-icon">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="1"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>
+        </div>
+        <h3>Play</h3>
+        <p>Billard, fléchettes et console : détendez-vous en attendant votre tour.</p>
+      </div>
+      <div class="concept-card reveal">
+        <div class="concept-icon">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l8 8M12 12l8 8M6 6l-2 2M18 18l2 2"/><circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/></svg>
+        </div>
+        <h3>Barber experts</h3>
+        <p>Une équipe de 7 pros passionnés : coupe, barbe, rasage à l'ancienne, couleur.</p>
+      </div>
+      <div class="concept-card reveal">
+        <div class="concept-icon">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.5 5 5.5.8-4 3.9 1 5.5-5-2.6-5 2.6 1-5.5-4-3.9 5.5-.8z"/></svg>
+        </div>
+        <h3>Finition signature</h3>
+        <p>Parfum Louis Vuitton ou Dior en touche finale. Sortez transformé.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRESTATIONS ===== -->
+<section class="section prestations" id="prestations">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-eyebrow">Prestations &amp; tarifs</span>
+      <h2 class="section-title">Choisissez votre <span class="accent">expérience</span></h2>
+      <p class="section-sub">Des coupes classiques aux rituels premium, il y en a pour tous les styles et tous les budgets.</p>
+    </div>
+
+    <!-- Mise en avant : Le Rituel Barbiche -->
+    <div class="signature-card reveal">
+      <div class="signature-left">
+        <span class="signature-badge">★ Notre expérience signature</span>
+        <h3>Le Rituel Barbiche</h3>
+        <p>Coupe + Barbe Premium + Soin Visage, et la signature Barbiche en finition : parfum Louis Vuitton ou Dior, au choix.</p>
+        <p class="signature-detail">Une heure pour soi, dans notre univers. Sortez transformé.</p>
+      </div>
+      <div class="signature-right">
+        <div class="signature-price"><span>€</span>69</div>
+        <div class="signature-duration">1h15 de soin complet</div>
+        <a href="https://www.planity.com/barbiche-montauroux" target="_blank" rel="noopener" class="btn btn-primary">Réserver le Rituel</a>
+      </div>
+    </div>
+
+    <!-- Catégories de prestations -->
+    <div class="presta-cats">
+      <!-- FORMULES -->
+      <div class="presta-cat reveal">
+        <h3>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.4H22l-6 4.5 2.3 7.1-6.3-4.6L5.7 21 8 13.9 2 9.4h7.6z"/></svg>
+          Les formules
+        </h3>
+        <div class="presta-item">
+          <div class="presta-item-info">
+            <div class="presta-item-name">Coupe + Barbe classique</div>
+            <div class="presta-item-desc">La préférée des clients. Shampoing, coupe, coiffage, taille de barbe.</div>
+          </div>
+          <div><span class="presta-item-price">42€</span><span class="presta-item-dur">45min</span></div>
+        </div>
+        <div class="presta-item">
+          <div class="presta-item-info">
+            <div class="presta-item-name">Coupe + Barbe premium</div>
+            <div class="presta-item-desc">Coupe + taille de barbe + serviette chaude.</div>
+          </div>
+          <div><span class="presta-item-price">50€</span><span class="presta-item-dur">1h</span></div>
+        </div>
+        <div class="presta-item">
+          <div class="presta-item-info">
+            <div class="presta-item-name">Homme pressé</div>
+            <div class="presta-item-desc">Coupe et barbe rapides, propres et efficaces en 30 min chrono.</div>
+          </div>
+          <div><span class="presta-item-price">35€</span><span class="presta-item-dur">30min</span></div>
+        </div>
+      </div>
+
+      <!-- HOMMES -->
+      <div class="presta-cat reveal">
+        <h3>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg>
+          Hommes
+        </h3>
+        <div class="presta-item">
+          <div class="presta-item-info">
+            <div class="presta-item-name">Coupe classique</div>
+            <div class="presta-item-desc">Shampoing, coupe, coiffage.</div>
+          </div>
+          <div><span class="presta-item-price">25€</span><span class="presta-item-dur">30min</span></div>
+        </div>
+        <div class="presta-item">
+          <div class="presta-item-info">
+            <div class="presta-item-name">L'homme pressé</div>
+            <div class="presta-item-desc">Coupe nette en 15 min, sans passage au bac.</div>
+          </div>
+          <div><span class="presta-item-price">20€</span><span class="presta-item-dur">15min</span></div>
+        </div>
+        <div class="presta-item">
+          <div class="presta-item-info">
+            <div class="presta-item-name">Coupe + parfume-moi</div>
+            <div class="presta-item-desc">Coupe + parfum Louis Vuitton ou Dior.</div>
+          </div>
+          <div><span class="presta-item-price">29€</span><span class="presta-item-dur">30min</span></div>
+        </div>
+      </div>
+
+      <!-- BARBES -->
+      <div class="presta-cat reveal">
+        <h3>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6c0 6 3 12 8 12s8-6 8-12M4 6c2-1 5-2 8-2s6 1 8 2"/></svg>
+          Barbes &amp; rasage
+        </h3>
+        <div class="presta-item">
+          <div class="presta-item-info">
+            <div class="presta-item-name">Barbe classique</div>
+          </div>
+          <div><span class="presta-item-price">20€</span><span class="presta-item-dur">20min</span></div>
+        </div>
+        <div class="presta-item">
+          <div class="presta-item-info">
+            <div class="presta-item-name">Barbe premium</div>
+            <div class="presta-item-desc">Taille + lame + serviette chaude + huile + massage visage.</div>
+          </div>
+          <div><span class="presta-item-price">28€</span><span class="presta-item-dur">30min</span></div>
+        </div>
+        <div class="presta-item">
+          <div class="presta-item-info">
+            <div class="presta-item-name">Rasage à l'ancienne</div>
+            <div class="presta-item-desc">Coupe-chou, serviette chaude, baume, massage visage.</div>
+          </div>
+          <div><span class="presta-item-price">28€</span><span class="presta-item-dur">30min</span></div>
+        </div>
+      </div>
+
+      <!-- ENFANTS / FEMMES -->
+      <div class="presta-cat reveal">
+        <h3>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20a6 6 0 0 1 12 0M14 20a5 5 0 0 1 7-3"/></svg>
+          Enfants &amp; Femmes
+        </h3>
+        <div class="presta-item">
+          <div class="presta-item-info">
+            <div class="presta-item-name">Garçon −12 ans</div>
+          </div>
+          <div><span class="presta-item-price">19€</span><span class="presta-item-dur">30min</span></div>
+        </div>
+        <div class="presta-item">
+          <div class="presta-item-info">
+            <div class="presta-item-name">Shampoing + Coupe + Brushing</div>
+            <div class="presta-item-desc">Cheveux courts à longs (femmes).</div>
+          </div>
+          <div><span class="presta-item-price">38€</span><span class="presta-item-dur">30min</span></div>
+        </div>
+        <div class="presta-item">
+          <div class="presta-item-info">
+            <div class="presta-item-name">Soin Signature visage</div>
+          </div>
+          <div><span class="presta-item-price">45€</span><span class="presta-item-dur">30min</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="presta-cta reveal">
+      <a href="https://www.planity.com/barbiche-montauroux" target="_blank" rel="noopener" class="btn btn-primary">
+        Voir toutes les prestations &amp; réserver
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M13 8l-4-4M13 8l-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+// Nav scroll effect
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// Mobile menu (placeholder — sera complété quand on ajoute les sections)
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+menuToggle.addEventListener('click', () => {
+  navLinks.classList.toggle('mobile-open');
+});
+
+// Scroll reveal : les éléments .reveal apparaissent au défilement
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      // léger délai en cascade pour les éléments d'un même groupe
+      setTimeout(() => entry.target.classList.add('in'), (i % 4) * 80);
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
+
+</body>
+</html>
