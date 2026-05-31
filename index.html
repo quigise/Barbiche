@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barbiche — Barbershop à Montauroux &amp; Le Luc | Venez pour la coupe, restez pour le fun</title>
+<meta name="description" content="Barbiche, barbershop & salon de coiffure à Montauroux et au Luc. Coupe homme, femme, enfant, barbe, rasage. Ambiance conviviale, billard, jus de fruits frais. Prenez rendez-vous en ligne.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Fonts : Bebas Neue (display, percutant barbershop) + Fraunces (élégance vintage) + Outfit (corps moderne) -->
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  /* ===== CHARTE BARBICHE — couleurs échantillonnées sur les vraies photos du salon =====
+     Bleu canard (#426B7E réel, murs du salon) + bronze (#4D3929 réel, logo) */
+  /* Bleu canard (couleur réelle du mur du salon #4C838E — teinte 190°) */
+  --teal: #4C838E;
+  --teal-deep: #346069;
+  --teal-dark: #21454C;
+  --teal-light: #72A8B2;
+
+  /* Bronze / cuivre (le logo Barbiche réel #593A22 — brun-bronze chaud) */
+  --bronze: #92633E;
+  --bronze-light: #BC8E60;
+  --bronze-deep: #593A22;
+
+  /* Neutres */
+  --black: #0C1618;
+  --ink: #16282E;
+  --cream: #F2ECE0;
+  --cream-warm: #E9E0D0;
+  --white: #FFFFFF;
+  --sand: #D6C8B0;
+
+  --gray-soft: #6E7F7D;
+
+  /* Ombres */
+  --shadow-soft: 0 20px 50px -25px rgba(27, 57, 66, 0.4);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ===== NAVIGATION ===== */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: transparent;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav.scrolled {
+  background: rgba(12, 20, 20, 0.85);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 4px 30px rgba(10, 52, 52, 0.25);
+}
+
+.nav-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 32px;
+  max-width: 1280px;
+  margin: 0 auto;
+  transition: padding 0.3s ease;
+}
+
+.nav.scrolled .nav-inner { padding: 14px 32px; }
+
+/* Logo provisoire (placeholder en attendant le vrai fichier) */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.logo-full {
+  height: 52px;
+  width: auto;
+  display: block;
+  padding: 11px 24px;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.93) 48%, rgba(255,255,255,0) 80%);
+  transition: height 0.3s ease;
+}
+
+.nav.scrolled .logo-full { height: 42px; }
+
+.nav-links {
+  display: flex;
+  gap: 34px;
+  align-items: center;
+}
+
+.nav-links a {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: rgba(244, 239, 230, 0.85);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover { color: var(--bronze-light); }
+
+.nav-cta {
+  background: var(--bronze);
+  color: var(--black) !important;
+  padding: 12px 24px;
+  border-radius: 100px;
+  font-weight: 600 !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 6px 18px -4px rgba(181, 133, 79, 0.5);
+}
+
+.nav-cta:hover {
+  background: var(--bronze-light);
+  transform: translateY(-2px);
+  color: var(--black) !important;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px;
+}
+
+.menu-toggle span {
+  width: 24px;
+  height: 2px;
+  background: var(--cream);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+/* ===== HERO ===== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal-deep) 55%, var(--teal) 100%);
+  overflow: hidden;
+}
+
+/* Texture de fond : lattes verticales (rappel du mur en bois du salon) */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 14px,
+    rgba(244, 239, 230, 0.025) 14px,
+    rgba(244, 239, 230, 0.025) 16px
+  );
+  pointer-events: none;
+}
+
+/* Halo bronze diffus */
+.hero::after {
+  content: '';
+  position: absolute;
+  top: -10%;
+  right: -5%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(181, 133, 79, 0.22) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 60px;
+  align-items: center;
+  width: 100%;
+}
+
+.hero-content {
+  padding: 120px 0 60px;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--bronze-light);
+  margin-bottom: 28px;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  width: 32px;
+  height: 1.5px;
+  background: var(--bronze);
+}
+
+.hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(56px, 9vw, 120px);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+  color: var(--cream);
+  margin-bottom: 28px;
+}
+
+.hero h1 .accent {
+  color: var(--bronze-light);
+  font-style: normal;
+}
+
+/* Le slogan en Fraunces italique pour le contraste élégant */
+.hero-slogan {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: clamp(20px, 2.6vw, 30px);
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 20px;
+  opacity: 0.95;
+}
+
+.hero-desc {
+  font-size: 17px;
+  line-height: 1.7;
+  color: rgba(244, 239, 230, 0.78);
+  max-width: 480px;
+  margin-bottom: 40px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 17px 34px;
+  border-radius: 100px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-primary {
+  background: var(--bronze);
+  color: var(--black);
+  box-shadow: 0 10px 30px -8px rgba(181, 133, 79, 0.6);
+}
+
+.btn-primary:hover {
+  background: var(--bronze-light);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px -10px rgba(181, 133, 79, 0.7);
+}
+
+.btn-ghost {
+  background: rgba(244, 239, 230, 0.08);
+  color: var(--cream);
+  border: 1px solid rgba(244, 239, 230, 0.25);
+  backdrop-filter: blur(10px);
+}
+
+.btn-ghost:hover {
+  background: rgba(244, 239, 230, 0.16);
+  border-color: rgba(244, 239, 230, 0.5);
+}
+
+/* Bloc visuel du hero (placeholder photo salon) */
+.hero-visual {
+  position: relative;
+  height: 560px;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 40px 80px -30px rgba(10, 52, 52, 0.7);
+  border: 1px solid rgba(244, 239, 230, 0.12);
+}
+
+.hero-visual-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Note d'avis (badge flottant) */
+.hero-rating {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  right: 24px;
+  background: rgba(12, 20, 20, 0.7);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(244, 239, 230, 0.15);
+  border-radius: 16px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hero-rating-stars {
+  color: var(--bronze-light);
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+
+.hero-rating-text {
+  color: var(--cream);
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.hero-rating-text strong {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  display: block;
+  color: var(--bronze-light);
+}
+
+/* ===== Animations ===== */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.fade-up-1 { animation-delay: 0.1s; }
+.fade-up-2 { animation-delay: 0.25s; }
+.fade-up-3 { animation-delay: 0.4s; }
+.fade-up-4 { animation-delay: 0.55s; }
+.fade-up-5 { animation-delay: 0.7s; }
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== SCROLL REVEAL ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.in { opacity: 1; transform: translateY(0); }
+
+/* ===== EN-TÊTE DE SECTION ===== */
+.section { padding: 120px 0; position: relative; }
+
+.section-head { max-width: 720px; margin: 0 auto 70px; text-align: center; }
+
+.section-eyebrow {
+  display: inline-block;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--bronze); margin-bottom: 18px;
+  position: relative; padding-bottom: 8px;
+}
+.section-eyebrow::after {
+  content: ''; position: absolute; bottom: 0; left: 50%;
+  transform: translateX(-50%); width: 36px; height: 2px; background: var(--bronze);
+}
+
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(40px, 6vw, 68px); font-weight: 400;
+  line-height: 1.0; letter-spacing: 0.01em; color: var(--ink);
+}
+.section-title .accent { color: var(--bronze); }
+
+.section-sub { font-size: 17px; line-height: 1.7; color: var(--gray-soft); margin-top: 20px; }
+
+/* ===== CONCEPT ===== */
+.concept { background: var(--cream); }
+.concept-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.concept-card {
+  background: var(--white); border-radius: 20px; padding: 0; overflow: hidden;
+  text-align: center; border: 1px solid rgba(89, 58, 34, 0.08);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+.concept-card:hover { transform: translateY(-6px); box-shadow: 0 24px 50px -24px rgba(27, 57, 66, 0.3); }
+.concept-media { height: 168px; overflow: hidden; }
+.concept-media img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+}
+.concept-card:hover .concept-media img { transform: scale(1.07); }
+.concept-card-body { padding: 0 26px 32px; }
+.concept-icon {
+  width: 60px; height: 60px; margin: -38px auto 16px; border-radius: 16px;
+  background: linear-gradient(135deg, var(--teal) 0%, var(--teal-deep) 100%);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--cream); box-shadow: 0 10px 24px -8px rgba(76, 131, 142, 0.5);
+  border: 4px solid var(--white); position: relative; z-index: 2;
+}
+.concept-card h3 { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 600; color: var(--ink); margin-bottom: 10px; }
+.concept-card p { font-size: 14.5px; line-height: 1.6; color: var(--gray-soft); }
+
+/* ===== PRESTATIONS ===== */
+.prestations { background: linear-gradient(180deg, var(--cream) 0%, var(--cream-warm) 100%); }
+
+.signature-card {
+  background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal-deep) 100%);
+  border-radius: 28px; padding: 48px; margin-bottom: 48px;
+  display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;
+  position: relative; overflow: hidden; box-shadow: 0 30px 70px -30px rgba(27, 57, 66, 0.6);
+}
+.signature-card::before {
+  content: ''; position: absolute; top: -30%; right: -10%;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(188, 142, 96, 0.25) 0%, transparent 65%); pointer-events: none;
+}
+.signature-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(188, 142, 96, 0.2); border: 1px solid rgba(188, 142, 96, 0.4);
+  color: var(--bronze-light); font-size: 12px; font-weight: 600;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 7px 16px; border-radius: 100px; margin-bottom: 20px;
+  position: relative; z-index: 1;
+}
+.signature-card h3 {
+  font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px, 5vw, 54px);
+  font-weight: 400; line-height: 1.0; color: var(--cream); margin-bottom: 16px;
+  position: relative; z-index: 1;
+}
+.signature-card p {
+  font-size: 16px; line-height: 1.7; color: rgba(242, 236, 224, 0.85);
+  max-width: 560px; margin-bottom: 8px; position: relative; z-index: 1;
+}
+.signature-detail { font-size: 14px !important; color: var(--bronze-light) !important; font-style: italic; }
+.signature-right { text-align: center; position: relative; z-index: 1; }
+.signature-price { font-family: 'Bebas Neue', sans-serif; font-size: 72px; line-height: 1; color: var(--bronze-light); }
+.signature-price span { font-size: 32px; }
+.signature-duration { font-size: 14px; color: rgba(242, 236, 224, 0.7); margin-bottom: 20px; }
+
+.presta-cats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+.presta-cat { background: var(--white); border-radius: 22px; padding: 34px; border: 1px solid rgba(89, 58, 34, 0.08); }
+.presta-cat h3 {
+  font-family: 'Bebas Neue', sans-serif; font-size: 28px; font-weight: 400;
+  letter-spacing: 0.04em; color: var(--teal-deep); margin-bottom: 22px;
+  padding-bottom: 14px; border-bottom: 2px solid rgba(76, 131, 142, 0.15);
+  display: flex; align-items: center; gap: 12px;
+}
+.presta-cat h3 svg { color: var(--bronze); }
+.presta-item {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+  padding: 13px 0; border-bottom: 1px dashed rgba(89, 58, 34, 0.12);
+}
+.presta-item:last-child { border-bottom: none; }
+.presta-item-info { flex: 1; }
+.presta-item-name { font-size: 15.5px; font-weight: 600; color: var(--ink); }
+.presta-item-desc { font-size: 13px; color: var(--gray-soft); margin-top: 2px; }
+.presta-item-price { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.03em; color: var(--bronze); white-space: nowrap; }
+.presta-item-dur { font-size: 12px; color: var(--gray-soft); white-space: nowrap; margin-left: 6px; }
+.presta-cta { text-align: center; margin-top: 48px; }
+
+/* ===== GALERIE ===== */
+.galerie { background: var(--ink); }
+.galerie .section-title, .galerie .section-sub { color: var(--cream); }
+.galerie .section-sub { color: rgba(242, 236, 224, 0.7); }
+.galerie-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 240px;
+  grid-auto-flow: dense;
+  gap: 16px;
+}
+.galerie-item {
+  border-radius: 18px;
+  overflow: hidden;
+  position: relative;
+  background: var(--teal-deep);
+}
+.galerie-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.16,1,0.3,1); }
+.galerie-item:hover img { transform: scale(1.08); }
+.galerie-item.tall { grid-row: span 2; }
+.galerie-placeholder {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(242,236,224,0.4); font-size: 13px; text-align: center; padding: 20px;
+  background: linear-gradient(135deg, var(--teal-deep), var(--teal-dark));
+}
+
+/* ===== ÉQUIPE ===== */
+.equipe { background: var(--cream); }
+.equipe-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+.equipe-card {
+  text-align: center;
+}
+.equipe-photo {
+  width: 100%;
+  aspect-ratio: 3/4;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 18px;
+  background: linear-gradient(135deg, var(--teal) 0%, var(--teal-deep) 100%);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.equipe-photo img { width: 100%; height: 100%; object-fit: cover; }
+.equipe-initial {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 72px; color: rgba(242,236,224,0.5);
+}
+.equipe-card h3 {
+  font-family: 'Fraunces', serif; font-size: 20px; font-weight: 600; color: var(--ink);
+}
+.equipe-card span { font-size: 14px; color: var(--bronze); font-weight: 500; }
+
+/* ===== AVIS ===== */
+.avis { background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal-deep) 100%); position: relative; overflow: hidden; }
+.avis::before {
+  content: ''; position: absolute; top: -20%; left: -10%;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(188,142,96,0.18) 0%, transparent 65%);
+}
+.avis .section-title { color: var(--cream); }
+.avis .section-eyebrow { color: var(--bronze-light); }
+.avis .section-eyebrow::after { background: var(--bronze-light); }
+
+.avis-score {
+  text-align: center; margin-bottom: 60px; position: relative; z-index: 1;
+}
+.avis-score-big {
+  font-family: 'Bebas Neue', sans-serif; font-size: 110px; line-height: 1;
+  color: var(--bronze-light);
+}
+.avis-score-stars { font-size: 28px; color: var(--bronze-light); letter-spacing: 4px; margin-bottom: 8px; }
+.avis-score-count { font-size: 15px; color: rgba(242,236,224,0.7); }
+
+.avis-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  position: relative; z-index: 1;
+}
+.avis-card {
+  background: rgba(242,236,224,0.06);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(242,236,224,0.12);
+  border-radius: 20px; padding: 30px;
+}
+.avis-card-stars { color: var(--bronze-light); font-size: 16px; letter-spacing: 2px; margin-bottom: 14px; }
+.avis-card p { font-size: 15px; line-height: 1.6; color: rgba(242,236,224,0.9); margin-bottom: 18px; font-style: italic; }
+.avis-card-author { font-size: 14px; font-weight: 600; color: var(--bronze-light); }
+
+/* ===== INFOS PRATIQUES ===== */
+.infos { background: var(--cream); }
+.infos-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: start;
+}
+.infos-block { margin-bottom: 32px; }
+.infos-block:last-child { margin-bottom: 0; }
+.infos-block-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.04em;
+  color: var(--teal-deep); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.infos-block-title svg { color: var(--bronze); }
+
+.horaires-list { list-style: none; }
+.horaires-list li {
+  display: flex; justify-content: space-between;
+  padding: 10px 0; border-bottom: 1px dashed rgba(89,58,34,0.12);
+  font-size: 15px;
+}
+.horaires-list li:last-child { border-bottom: none; }
+.horaires-list .jour { color: var(--ink); font-weight: 500; }
+.horaires-list .heure { color: var(--gray-soft); }
+.horaires-list li.ferme .heure { color: #C0392B; }
+.horaires-list li.today { background: rgba(76,131,142,0.08); margin: 0 -12px; padding: 10px 12px; border-radius: 8px; border-bottom: none; }
+
+.infos-contact-item {
+  display: flex; align-items: flex-start; gap: 14px; margin-bottom: 18px;
+}
+.infos-contact-icon {
+  width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+  background: var(--white); border: 1px solid rgba(89,58,34,0.1);
+  display: flex; align-items: center; justify-content: center; color: var(--bronze);
+}
+.infos-contact-item a, .infos-contact-item span { color: var(--ink); text-decoration: none; font-size: 15px; line-height: 1.5; }
+.infos-contact-item a:hover { color: var(--bronze); }
+
+.infos-map {
+  width: 100%; height: 100%; min-height: 400px;
+  border-radius: 22px; overflow: hidden; border: 1px solid rgba(89,58,34,0.1);
+}
+.infos-map iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+/* ===== CTA FINAL ===== */
+.cta-final {
+  background: linear-gradient(135deg, var(--bronze-deep) 0%, var(--bronze) 100%);
+  position: relative; overflow: hidden;
+}
+.cta-final-inner { text-align: center; position: relative; z-index: 1; }
+.cta-final h2 {
+  font-family: 'Bebas Neue', sans-serif; font-size: clamp(44px, 7vw, 84px);
+  font-weight: 400; line-height: 1; color: var(--cream); margin-bottom: 20px;
+}
+.cta-final p { font-size: 18px; color: rgba(242,236,224,0.9); margin-bottom: 36px; max-width: 540px; margin-left: auto; margin-right: auto; }
+.cta-final .btn-primary { background: var(--cream); color: var(--ink); font-size: 17px; padding: 18px 40px; }
+.cta-final .btn-primary:hover { background: var(--white); }
+
+/* ===== FOOTER ===== */
+.footer { background: var(--ink); padding: 70px 0 36px; }
+.footer-grid {
+  display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px;
+}
+.footer-logo { height: 56px; margin-bottom: 20px; }
+.footer-brand p { font-size: 14px; line-height: 1.7; color: rgba(242,236,224,0.6); max-width: 300px; }
+.footer-col h4 {
+  font-family: 'Bebas Neue', sans-serif; font-size: 19px; letter-spacing: 0.05em;
+  color: var(--bronze-light); margin-bottom: 18px;
+}
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 11px; }
+.footer-col a, .footer-col span { color: rgba(242,236,224,0.65); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+.footer-col a:hover { color: var(--bronze-light); }
+.footer-socials { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+.footer-social {
+  height: 40px; padding: 0 14px; border-radius: 10px;
+  background: rgba(242,236,224,0.08); border: 1px solid rgba(242,236,224,0.12);
+  display: inline-flex; align-items: center; gap: 8px;
+  color: rgba(242,236,224,0.7); transition: all 0.3s;
+  font-size: 13px; font-weight: 500; text-decoration: none; white-space: nowrap;
+}
+.footer-social svg { flex-shrink: 0; }
+.footer-social:hover { background: var(--bronze); color: var(--ink); transform: translateY(-2px); }
+.footer-bottom {
+  border-top: 1px solid rgba(242,236,224,0.1); padding-top: 28px;
+  display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+}
+.footer-bottom p { font-size: 13px; color: rgba(242,236,224,0.5); }
+.footer-bottom-links { display: flex; gap: 20px; }
+.footer-bottom-links a { font-size: 13px; color: rgba(242,236,224,0.5); text-decoration: none; }
+.footer-bottom-links a:hover { color: var(--bronze-light); }
+
+/* ===== FAB téléphone mobile ===== */
+.fab-call {
+  display: none;
+  position: fixed; bottom: 20px; right: 20px;
+  width: 58px; height: 58px; border-radius: 50%;
+  background: var(--bronze); color: var(--cream);
+  align-items: center; justify-content: center;
+  box-shadow: 0 8px 24px -4px rgba(89,58,34,0.6); z-index: 99;
+  -webkit-tap-highlight-color: transparent;
+  animation: fabPulse 2.5s ease-out 2s infinite;
+}
+@keyframes fabPulse {
+  0% { box-shadow: 0 8px 24px -4px rgba(89,58,34,0.6), 0 0 0 0 rgba(146,99,62,0.5); }
+  70% { box-shadow: 0 8px 24px -4px rgba(89,58,34,0.6), 0 0 0 16px rgba(146,99,62,0); }
+  100% { box-shadow: 0 8px 24px -4px rgba(89,58,34,0.6), 0 0 0 0 rgba(146,99,62,0); }
+}
+
+/* ===== MODALE CHOIX SALON ===== */
+.salon-modal {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(12, 20, 20, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.salon-modal.open { opacity: 1; visibility: visible; }
+.salon-modal-box {
+  background: var(--cream);
+  border-radius: 26px;
+  padding: 44px 40px;
+  max-width: 540px; width: 100%;
+  position: relative;
+  transform: translateY(20px) scale(0.97);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 40px 90px -30px rgba(12, 20, 20, 0.6);
+}
+.salon-modal.open .salon-modal-box { transform: translateY(0) scale(1); }
+.salon-modal-close {
+  position: absolute; top: 18px; right: 18px;
+  width: 38px; height: 38px; border-radius: 50%;
+  background: rgba(89, 58, 34, 0.08); border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink); transition: background 0.2s;
+}
+.salon-modal-close:hover { background: rgba(89, 58, 34, 0.16); }
+.salon-modal h3 {
+  font-family: 'Bebas Neue', sans-serif; font-size: 34px; font-weight: 400;
+  letter-spacing: 0.02em; color: var(--ink); text-align: center; margin-bottom: 6px;
+}
+.salon-modal-sub { text-align: center; color: var(--gray-soft); font-size: 15px; margin-bottom: 30px; }
+.salon-modal-options { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.salon-option {
+  display: block; text-decoration: none;
+  background: var(--white); border: 1.5px solid rgba(89, 58, 34, 0.12);
+  border-radius: 18px; padding: 26px 22px; text-align: center;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.salon-option:hover {
+  border-color: var(--bronze); transform: translateY(-4px);
+  box-shadow: 0 20px 40px -18px rgba(76, 131, 142, 0.4);
+}
+.salon-option-city {
+  font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 0.03em;
+  color: var(--teal-deep); margin-bottom: 6px;
+}
+.salon-option-rating { font-size: 13px; color: var(--bronze); font-weight: 600; margin-bottom: 4px; }
+.salon-option-addr { font-size: 12.5px; color: var(--gray-soft); line-height: 1.4; }
+.salon-option-go {
+  display: inline-block; margin-top: 14px;
+  font-size: 13px; font-weight: 600; color: var(--bronze);
+}
+
+/* ===== NOS 2 SALONS ===== */
+.salons { background: var(--cream); }
+.salons-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.salon-card {
+  background: var(--white); border-radius: 24px; overflow: hidden;
+  border: 1px solid rgba(89, 58, 34, 0.08);
+  display: flex; flex-direction: column;
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease;
+}
+.salon-card:hover { transform: translateY(-5px); box-shadow: 0 30px 60px -28px rgba(27,57,66,0.35); }
+.salon-card-map { width: 100%; height: 220px; }
+.salon-card-map iframe { width: 100%; height: 100%; border: 0; display: block; }
+.salon-card-body { padding: 32px; flex: 1; display: flex; flex-direction: column; }
+.salon-card-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; gap: 12px; }
+.salon-card-city {
+  font-family: 'Bebas Neue', sans-serif; font-size: 34px; font-weight: 400;
+  letter-spacing: 0.02em; color: var(--ink); line-height: 1;
+}
+.salon-card-badge {
+  background: var(--teal); color: var(--cream);
+  font-size: 13px; font-weight: 700; padding: 6px 12px; border-radius: 100px;
+  white-space: nowrap; display: inline-flex; align-items: center; gap: 4px;
+}
+.salon-card-info { margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px; font-size: 14.5px; color: var(--ink); line-height: 1.5; }
+.salon-card-info svg { color: var(--bronze); flex-shrink: 0; margin-top: 3px; }
+.salon-card-info a { color: var(--ink); text-decoration: none; }
+.salon-card-info a:hover { color: var(--bronze); }
+.salon-card-hours { font-size: 13.5px; color: var(--gray-soft); line-height: 1.7; margin: 14px 0 22px; padding: 14px 0; border-top: 1px dashed rgba(89,58,34,0.12); border-bottom: 1px dashed rgba(89,58,34,0.12); }
+.salon-card-hours strong { color: var(--ink); font-weight: 600; }
+.salon-card .btn { margin-top: auto; width: 100%; justify-content: center; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+  .hero-visual { height: 420px; order: -1; }
+  .hero-content { padding: 110px 0 0; }
+  .nav-links { display: none; }
+  .menu-toggle { display: flex; }
+  .section { padding: 90px 0; }
+  .concept-grid { grid-template-columns: repeat(2, 1fr); }
+  .presta-cats { grid-template-columns: 1fr; }
+  .signature-card { grid-template-columns: 1fr; gap: 28px; text-align: center; padding: 40px 32px; }
+  .signature-card p { margin-left: auto; margin-right: auto; }
+  .galerie-grid { grid-template-columns: repeat(2, 1fr); }
+  .equipe-grid { grid-template-columns: repeat(3, 1fr); }
+  .avis-grid { grid-template-columns: 1fr; }
+  .infos-grid { grid-template-columns: 1fr; gap: 40px; }
+  .infos-map { min-height: 320px; }
+  .salons-grid { grid-template-columns: 1fr; gap: 26px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+
+  /* Menu mobile déroulant */
+  .nav-links.mobile-open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%; left: 0; right: 0;
+    background: rgba(12, 20, 20, 0.97);
+    backdrop-filter: blur(18px);
+    padding: 24px 32px;
+    gap: 20px;
+    align-items: center;
+  }
+  .nav-links.mobile-open a { color: rgba(242, 239, 230, 0.9); }
+
+  .fab-call { display: flex; }
+}
+
+@media (max-width: 600px) {
+  .container { padding: 0 20px; }
+  .nav-inner { padding: 16px 20px; }
+  .logo-full { height: 40px; }
+  .nav.scrolled .logo-full { height: 34px; }
+  .hero h1 { font-size: clamp(48px, 16vw, 80px); }
+  .hero-actions { flex-direction: column; }
+  .btn { width: 100%; justify-content: center; }
+  .hero-visual { height: 360px; }
+  .section { padding: 70px 0; }
+  .section-head { margin-bottom: 48px; }
+  .concept-grid { grid-template-columns: 1fr; gap: 18px; }
+  .presta-cat { padding: 26px; }
+  .signature-price { font-size: 60px; }
+  .signature-card { padding: 32px 24px; }
+  .galerie-grid { grid-template-columns: 1fr; grid-auto-rows: 220px; }
+  .galerie-item.tall { grid-row: span 1; }
+  .equipe-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .avis-score-big { font-size: 88px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .salon-modal-options { grid-template-columns: 1fr; }
+  .salon-modal-box { padding: 36px 26px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== NAVIGATION ===== -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#hero" class="logo">
+      <img src="assets/logo-mark.png" alt="Barbiche — Barber, Play, Fresh Juice" class="logo-full" />
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="#concept">Le concept</a>
+      <a href="#prestations">Prestations</a>
+      <a href="#galerie">Galerie</a>
+      <a href="#equipe">L'équipe</a>
+      <a href="#infos">Infos</a>
+      <a href="https://www.planity.com/barbiche-montauroux" target="_blank" rel="noopener" class="nav-cta js-rdv">Prendre RDV</a>
+    </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <span class="hero-eyebrow fade-up fade-up-1">Barbershop · Montauroux &amp; Le Luc</span>
+        <h1 class="fade-up fade-up-2">Venez pour<br>la coupe,<br><span class="accent">restez pour le fun.</span></h1>
+        <p class="hero-slogan fade-up fade-up-3">Bien plus qu'un simple salon de coiffure.</p>
+        <p class="hero-desc fade-up fade-up-3">Coupe, barbe, couleur, soins — dans une ambiance conviviale unique : billard, fléchettes, jus de fruits frais maison et bonne humeur garantie.</p>
+        <div class="hero-actions fade-up fade-up-4">
+          <a href="https://www.planity.com/barbiche-montauroux" target="_blank" rel="noopener" class="btn btn-primary js-rdv">
+            Prendre rendez-vous
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M13 8l-4-4M13 8l-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#prestations" class="btn btn-ghost">Voir les prestations</a>
+        </div>
+      </div>
+      <div class="hero-visual fade-up fade-up-3">
+        <img src="assets/hero-neon.jpg" alt="Client à la longue barbe grise après un soin barbe chez Barbiche" class="hero-visual-img" />
+        <div class="hero-rating">
+          <span class="hero-rating-stars">★★★★★</span>
+          <div class="hero-rating-text">
+            <strong>4,9 / 5</strong>
+            Plus de 425 avis clients
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONCEPT ===== -->
+<section class="section concept" id="concept">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-eyebrow">Le concept</span>
+      <h2 class="section-title">Bien plus qu'un <span class="accent">barbershop</span></h2>
+      <p class="section-sub">Chez Barbiche, on vient pour la coupe et on reste pour le fun. Un concept store unique où le soin rencontre la convivialité.</p>
+    </div>
+    <div class="concept-grid">
+      <div class="concept-card reveal">
+        <div class="concept-media"><img src="assets/concept-juice.jpg" alt="Gobelet Barbiche — jus de fruits frais maison" loading="lazy" /></div>
+        <div class="concept-card-body">
+          <div class="concept-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a6 6 0 0 0 12 0M6 9V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4M9 21h6M12 15v6"/></svg>
+          </div>
+          <h3>Coffeeshop</h3>
+          <p>Jus de fruits frais maison ou café barista offerts à chaque prestation.</p>
+        </div>
+      </div>
+      <div class="concept-card reveal">
+        <div class="concept-media"><img src="assets/concept-play.jpg" alt="Espace #Play — billard et fléchettes" loading="lazy" /></div>
+        <div class="concept-card-body">
+          <div class="concept-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="1"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>
+          </div>
+          <h3>Play</h3>
+          <p>Billard, fléchettes et console : détendez-vous en attendant votre tour.</p>
+        </div>
+      </div>
+      <div class="concept-card reveal">
+        <div class="concept-media"><img src="assets/concept-barber.jpg" alt="Rasage au coupe-chou par un barbier Barbiche" loading="lazy" /></div>
+        <div class="concept-card-body">
+          <div class="concept-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l8 8M12 12l8 8M6 6l-2 2M18 18l2 2"/><circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/></svg>
+          </div>
+          <h3>Barber experts</h3>
+          <p>Coupe, barbe, rasage à l'ancienne, couleur et autres prestations premium.</p>
+        </div>
+      </div>
+      <div class="concept-card reveal">
+        <div class="concept-media"><img src="assets/concept-detente.jpg" alt="Fauteuil massant — espace détente" loading="lazy" /></div>
+        <div class="concept-card-body">
+          <div class="concept-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18v-4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4"/><path d="M6 12V8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"/><path d="M4 18h16M7 21v-3M17 21v-3"/></svg>
+          </div>
+          <h3>Espace détente</h3>
+          <p>Siège massant intégral et masque LED pour un moment de relaxation totale.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRESTATIONS ===== -->
+<section class="section prestations" id="prestations">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-eyebrow">Prestations &amp; tarifs</span>
+      <h2 class="section-title">Choisissez votre <span class="accent">expérience</span></h2>
+      <p class="section-sub">Des coupes classiques aux rituels premium, il y en a pour tous les styles et tous les budgets.</p>
+    </div>
+
+    <!-- Mise en avant : Le Rituel Barbiche -->
+    <div class="signature-card reveal">
+      <div class="signature-left">
+        <span class="signature-badge">★ Notre expérience signature</span>
+        <h3>Le Rituel Barbiche</h3>
+        <p>Coupe + Barbe Premium + Soin Visage, et la signature Barbiche en finition : parfum Louis Vuitton ou Dior, au choix.</p>
+        <p class="signature-detail">Une heure pour soi, dans notre univers. Sortez transformé.</p>
+      </div>
+      <div class="signature-right">
+        <div class="signature-price"><span>€</span>69</div>
+        <div class="signature-duration">1h15 de soin complet</div>
+        <a href="https://www.planity.com/barbiche-montauroux" target="_blank" rel="noopener" class="btn btn-primary js-rdv">Réserver le Rituel</a>
+      </div>
+    </div>
+
+    <!-- Catégories de prestations -->
+    <div class="presta-cats">
+      <!-- FORMULES -->
+      <div class="presta-cat reveal">
+        <h3>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 7.4H22l-6 4.5 2.3 7.1-6.3-4.6L5.7 21 8 13.9 2 9.4h7.6z"/></svg>
+          Les formules
+        </h3>
+        <div class="presta-item">
+          <div class="presta-item-info">
+            <div class="presta-item-name">Coupe + Barbe classique</div>
+            <div class="presta-item-desc">La préférée des clients. Shampoing, coupe, coiffage, taille de barbe.</div>
+          </div>
+          <div><span class="presta-item-price">42€</span><span class="presta-item-dur">45min</span></div>
+        </div>
+        <div class="presta-item">
+          <div class="presta-item-info">
+            <div class="presta-item-name">Coupe + Barbe premium</div>
+            <div class="presta-item-desc">Coupe + taille de barbe + serviette chaude.</div>
+          </div>
+          <div><span class="presta-item-price">50€</span><span class="presta-item-dur">1h</span></div>
+        </div>
+        <div class="presta-item">
+          <div class="presta-item-info">
+            <div class="presta-item-name">Homme pressé</div>
+            <div class="presta-item-desc">Coupe et barbe rapides, propres et efficaces en 30 min chrono.</div>
+          </div>
+          <div><span class="presta-item-price">35€</span><span class="presta-item-dur">30min</span></div>
+        </div>
+      </div>
+
+      <!-- HOMMES -->
+      <div class="presta-cat reveal">
+        <h3>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg>
+          Hommes
+        </h3>
+        <div class="presta-item">
+          <div class="presta-item-info">
+            <div class="presta-item-name">Coupe classique</div>
+            <div class="presta-item-desc">Shampoing, coupe, coiffage.</div>
+          </div>
+          <div><span class="presta-item-price">25€</span><span class="presta-item-dur">30min</span></div>
+        </div>
+        <div class="presta-item">
+          <div class="presta-item-info">
+            <div class="presta-item-name">L'homme pressé</div>
+            <div class="presta-item-desc">Coupe nette en 15 min, sans passage au bac.</div>
+          </div>
+          <div><span class="presta-item-price">20€</span><span class="presta-item-dur">15min</span></div>
+        </div>
+        <div class="presta-item">
+          <div class="presta-item-info">
+            <div class="presta-item-name">Coupe + parfume-moi</div>
+            <div class="presta-item-desc">Coupe + parfum Louis Vuitton ou Dior.</div>
+          </div>
+          <div><span class="presta-item-price">29€</span><span class="presta-item-dur">30min</span></div>
+        </div>
+      </div>
+
+      <!-- BARBES -->
+      <div class="presta-cat reveal">
+        <h3>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6c0 6 3 12 8 12s8-6 8-12M4 6c2-1 5-2 8-2s6 1 8 2"/></svg>
+          Barbes &amp; rasage
+        </h3>
+        <div class="presta-item">
+          <div class="presta-item-info">
+            <div class="presta-item-name">Barbe classique</div>
+          </div>
+          <div><span class="presta-item-price">20€</span><span class="presta-item-dur">20min</span></div>
+        </div>
+        <div class="presta-item">
+          <div class="presta-item-info">
+            <div class="presta-item-name">Barbe premium</div>
+            <div class="presta-item-desc">Taille + lame + serviette chaude + huile + massage visage.</div>
+          </div>
+          <div><span class="presta-item-price">28€</span><span class="presta-item-dur">30min</span></div>
+        </div>
+        <div class="presta-item">
+          <div class="presta-item-info">
+            <div class="presta-item-name">Rasage à l'ancienne</div>
+            <div class="presta-item-desc">Coupe-chou, serviette chaude, baume, massage visage.</div>
+          </div>
+          <div><span class="presta-item-price">28€</span><span class="presta-item-dur">30min</span></div>
+        </div>
+      </div>
+
+      <!-- ENFANTS / FEMMES -->
+      <div class="presta-cat reveal">
+        <h3>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20a6 6 0 0 1 12 0M14 20a5 5 0 0 1 7-3"/></svg>
+          Enfants &amp; Femmes
+        </h3>
+        <div class="presta-item">
+          <div class="presta-item-info">
+            <div class="presta-item-name">Garçon −12 ans</div>
+          </div>
+          <div><span class="presta-item-price">19€</span><span class="presta-item-dur">30min</span></div>
+        </div>
+        <div class="presta-item">
+          <div class="presta-item-info">
+            <div class="presta-item-name">Shampoing + Coupe + Brushing</div>
+            <div class="presta-item-desc">Cheveux courts à longs (femmes).</div>
+          </div>
+          <div><span class="presta-item-price">38€</span><span class="presta-item-dur">30min</span></div>
+        </div>
+        <div class="presta-item">
+          <div class="presta-item-info">
+            <div class="presta-item-name">Soin Signature visage</div>
+          </div>
+          <div><span class="presta-item-price">45€</span><span class="presta-item-dur">30min</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="presta-cta reveal">
+      <a href="https://www.planity.com/barbiche-montauroux" target="_blank" rel="noopener" class="btn btn-primary js-rdv">
+        Voir toutes les prestations &amp; réserver
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M13 8l-4-4M13 8l-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GALERIE ===== -->
+<section class="section galerie" id="galerie">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-eyebrow">Galerie</span>
+      <h2 class="section-title">L'univers <span class="accent">Barbiche</span></h2>
+      <p class="section-sub">Plongez dans l'univers Barbiche : barbe &amp; rasage, billard, bar à jus, nail bar, espace détente et coins lounge soignés.</p>
+    </div>
+    <div class="galerie-grid">
+      <div class="galerie-item tall reveal">
+        <img src="assets/galerie-coupe.jpg" alt="Coiffage devant le miroir doré chez Barbiche" loading="lazy" />
+      </div>
+      <div class="galerie-item reveal">
+        <img src="assets/galerie-nails.jpg" alt="Barbiche Nails — pose d'ongles sous néon rose" loading="lazy" />
+      </div>
+      <div class="galerie-item reveal">
+        <img src="assets/galerie-juice.jpg" alt="Coin #Juice — bar à jus de fruits frais maison" loading="lazy" />
+      </div>
+      <div class="galerie-item reveal">
+        <img src="assets/galerie-play.jpg" alt="Espace #Play — billard, fléchettes et fauteuils chesterfield" loading="lazy" />
+      </div>
+      <div class="galerie-item reveal">
+        <img src="assets/galerie-cafe.jpg" alt="Café signature et bougie Barbiche dans le coin lounge" loading="lazy" />
+      </div>
+      <div class="galerie-item tall reveal">
+        <img src="assets/galerie-rasage.jpg" alt="Rasage au coupe-chou par un barbier Barbiche" loading="lazy" />
+      </div>
+      <div class="galerie-item reveal">
+        <img src="assets/galerie-lounge.jpg" alt="Coin détente : canapé chesterfield et logo Barbiche en bois" loading="lazy" />
+      </div>
+      <div class="galerie-item reveal">
+        <img src="assets/galerie-detente.jpg" alt="Fauteuil massant — espace détente exclusif" loading="lazy" />
+      </div>
+      <div class="galerie-item reveal">
+        <img src="assets/galerie-cadeau.jpg" alt="Carte cadeau Barbiche et coffrets" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ÉQUIPE ===== -->
+<section class="section equipe" id="equipe">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-eyebrow">L'équipe</span>
+      <h2 class="section-title">Les visages de <span class="accent">Barbiche</span></h2>
+      <p class="section-sub">7 passionnés à votre service, chacun avec son style et son expertise.</p>
+    </div>
+    <div class="equipe-grid">
+      <div class="equipe-card reveal">
+        <div class="equipe-photo"><span class="equipe-initial">A</span></div>
+        <h3>Amélie</h3>
+        <span>Coiffeuse · Coloriste</span>
+      </div>
+      <div class="equipe-card reveal">
+        <div class="equipe-photo"><span class="equipe-initial">T</span></div>
+        <h3>Tessa</h3>
+        <span>Coiffeuse</span>
+      </div>
+      <div class="equipe-card reveal">
+        <div class="equipe-photo"><span class="equipe-initial">F</span></div>
+        <h3>Fanny</h3>
+        <span>Coiffeuse</span>
+      </div>
+      <div class="equipe-card reveal">
+        <div class="equipe-photo"><span class="equipe-initial">E</span></div>
+        <h3>Ethan</h3>
+        <span>Barbier</span>
+      </div>
+      <div class="equipe-card reveal">
+        <div class="equipe-photo"><span class="equipe-initial">S</span></div>
+        <h3>Sam</h3>
+        <span>Barbier</span>
+      </div>
+      <div class="equipe-card reveal">
+        <div class="equipe-photo"><span class="equipe-initial">A</span></div>
+        <h3>Anaé</h3>
+        <span>Coiffeuse</span>
+      </div>
+      <div class="equipe-card reveal">
+        <div class="equipe-photo"><span class="equipe-initial">H</span></div>
+        <h3>Hugo</h3>
+        <span>Barbier</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== AVIS ===== -->
+<section class="section avis" id="avis">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-eyebrow">Avis clients</span>
+      <h2 class="section-title">Ils adorent <span class="accent">Barbiche</span></h2>
+    </div>
+    <div class="avis-score reveal">
+      <div class="avis-score-stars">★★★★★</div>
+      <div class="avis-score-big">4,9</div>
+      <div class="avis-score-count">Note moyenne sur 425 avis vérifiés</div>
+    </div>
+    <div class="avis-grid">
+      <div class="avis-card reveal">
+        <div class="avis-card-stars">★★★★★</div>
+        <p>"1ère fois dans ce barber, et assurément pas la dernière. Coupe réalisée nickel, ambiance relax, déco originale avec billard, fléchette… J'ai adoré les sièges old-school, l'accueil. N'hésitez pas !"</p>
+        <div class="avis-card-author">— Ronic</div>
+      </div>
+      <div class="avis-card reveal">
+        <div class="avis-card-stars">★★★★★</div>
+        <p>"Équipe au top ! Magnifique salon, avec une ambiance géniale, une équipe très agréable, sans oublier d'être excellents dans leur domaine !"</p>
+        <div class="avis-card-author">— Nicolas</div>
+      </div>
+      <div class="avis-card reveal">
+        <div class="avis-card-stars">★★★★★</div>
+        <p>"Comme d'habitude, de bons conseils et toujours souriants. Un vrai plaisir de me rendre chez Barbiche, toujours contente du résultat. À très bientôt !"</p>
+        <div class="avis-card-author">— Cliente fidèle</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== NOS 2 SALONS ===== -->
+<section class="section salons" id="infos">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-eyebrow">Nos salons</span>
+      <h2 class="section-title">Deux adresses, <span class="accent">un même esprit</span></h2>
+      <p class="section-sub">Retrouvez l'expérience Barbiche à Montauroux et au Luc. Choisissez le salon le plus proche de chez vous.</p>
+    </div>
+    <div class="salons-grid">
+
+      <!-- SALON MONTAUROUX -->
+      <div class="salon-card reveal">
+        <div class="salon-card-map">
+          <iframe src="https://www.google.com/maps?q=Barbiche+Montauroux+Centre+BPA+RD+562+83440&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Carte Barbiche Montauroux"></iframe>
+        </div>
+        <div class="salon-card-body">
+          <div class="salon-card-head">
+            <div class="salon-card-city">Montauroux</div>
+            <span class="salon-card-badge">★ 4,9 · 425 avis</span>
+          </div>
+          <div class="salon-card-info">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Centre BPA RD 562, 83440 Montauroux</span>
+          </div>
+          <div class="salon-card-info">
+            <svg width="17" height="17" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 13v3a1 1 0 01-1 1c-7 0-13-6-13-13a1 1 0 011-1h3l1 4-2 1c1 3 3 5 6 6l1-2 4 1z"/></svg>
+            <a href="tel:+33955277591">09 55 27 75 91</a>
+          </div>
+          <div class="salon-card-hours">
+            <strong>Lun – Jeu</strong> : 9h – 19h<br>
+            <strong>Ven – Sam</strong> : 9h – 19h30<br>
+            <strong>Dimanche</strong> : fermé
+          </div>
+          <a href="https://www.planity.com/barbiche-montauroux" target="_blank" rel="noopener" class="btn btn-primary">Prendre RDV à Montauroux</a>
+        </div>
+      </div>
+
+      <!-- SALON LE LUC -->
+      <div class="salon-card reveal">
+        <div class="salon-card-map">
+          <iframe src="https://www.google.com/maps?q=Barbiche+Le+Luc+Centre+commercial+les+Liebauds+83340&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Carte Barbiche Le Luc"></iframe>
+        </div>
+        <div class="salon-card-body">
+          <div class="salon-card-head">
+            <div class="salon-card-city">Le Luc</div>
+            <span class="salon-card-badge">★ 5,0 · 227 avis</span>
+          </div>
+          <div class="salon-card-info">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Centre commercial les Liebauds, 83340 Le Luc</span>
+          </div>
+          <div class="salon-card-info">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.5 5 5.5.8-4 3.9 1 5.5-5-2.6-5 2.6 1-5.5-4-3.9 5.5-.8z"/></svg>
+            <span>Espace détente exclusif : siège massant &amp; masque LED</span>
+          </div>
+          <div class="salon-card-hours">
+            <strong>Lun – Jeu</strong> : 9h – 19h<br>
+            <strong>Ven – Sam</strong> : 9h – 19h30<br>
+            <strong>Dimanche</strong> : fermé
+          </div>
+          <a href="https://www.planity.com/barbiche-le-luc-83340" target="_blank" rel="noopener" class="btn btn-primary">Prendre RDV au Luc</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA FINAL ===== -->
+<section class="section cta-final">
+  <div class="container">
+    <div class="cta-final-inner reveal">
+      <h2>Prêt pour votre transformation ?</h2>
+      <p>Réservez votre créneau en quelques clics, 24h/24. On vous attend chez Barbiche !</p>
+      <a href="https://www.planity.com/barbiche-montauroux" target="_blank" rel="noopener" class="btn btn-primary js-rdv">
+        Prendre rendez-vous maintenant
+        <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M13 8l-4-4M13 8l-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="assets/logo-mark-light.png" alt="Barbiche" class="footer-logo" />
+        <p>Barbershop &amp; salon de coiffure à Montauroux et au Luc. Venez pour la coupe, restez pour le fun.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/barbiche_montauroux" target="_blank" rel="noopener" class="footer-social" aria-label="Instagram Montauroux">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            <span>Instagram Montauroux</span>
+          </a>
+          <a href="https://www.instagram.com/barbiche_leluc" target="_blank" rel="noopener" class="footer-social" aria-label="Instagram Le Luc">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            <span>Instagram Le Luc</span>
+          </a>
+          <a href="https://www.facebook.com/barbichemontauroux" target="_blank" rel="noopener" class="footer-social" aria-label="Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            <span>Facebook</span>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#concept">Le concept</a></li>
+          <li><a href="#prestations">Prestations &amp; tarifs</a></li>
+          <li><a href="#galerie">Galerie</a></li>
+          <li><a href="#equipe">L'équipe</a></li>
+          <li><a href="#infos">Infos pratiques</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Salon Montauroux</h4>
+        <ul>
+          <li><span>Centre BPA RD 562<br>83440 Montauroux</span></li>
+          <li><a href="tel:+33955277591">09 55 27 75 91</a></li>
+          <li><a href="https://www.instagram.com/barbiche_montauroux" target="_blank" rel="noopener">Instagram →</a></li>
+          <li><a href="https://www.planity.com/barbiche-montauroux" target="_blank" rel="noopener">Prendre RDV →</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Salon Le Luc</h4>
+        <ul>
+          <li><span>CC les Liebauds<br>83340 Le Luc</span></li>
+          <li><a href="mailto:Barbiche.shop@gmail.com">Barbiche.shop@gmail.com</a></li>
+          <li><a href="https://www.instagram.com/barbiche_leluc" target="_blank" rel="noopener">Instagram →</a></li>
+          <li><a href="https://www.planity.com/barbiche-le-luc-83340" target="_blank" rel="noopener">Prendre RDV →</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Barbiche · Tous droits réservés</p>
+      <div class="footer-bottom-links">
+        <a href="#">Mentions légales</a>
+        <a href="#">Confidentialité</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== MODALE CHOIX DU SALON ===== -->
+<div class="salon-modal" id="salonModal">
+  <div class="salon-modal-box">
+    <button class="salon-modal-close" id="salonModalClose" aria-label="Fermer">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <h3>Quel salon ?</h3>
+    <p class="salon-modal-sub">Choisissez le salon Barbiche où vous souhaitez réserver.</p>
+    <div class="salon-modal-options">
+      <a href="https://www.planity.com/barbiche-montauroux" target="_blank" rel="noopener" class="salon-option">
+        <div class="salon-option-city">Montauroux</div>
+        <div class="salon-option-rating">★ 4,9 · 425 avis</div>
+        <div class="salon-option-addr">Centre BPA RD 562</div>
+        <span class="salon-option-go">Réserver →</span>
+      </a>
+      <a href="https://www.planity.com/barbiche-le-luc-83340" target="_blank" rel="noopener" class="salon-option">
+        <div class="salon-option-city">Le Luc</div>
+        <div class="salon-option-rating">★ 5,0 · 227 avis</div>
+        <div class="salon-option-addr">CC les Liebauds</div>
+        <span class="salon-option-go">Réserver →</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- FAB téléphone mobile -->
+<a href="tel:+33955277591" class="fab-call" aria-label="Appeler Barbiche">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+</a>
+
+<script>
+// Nav scroll effect
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// Mobile menu (placeholder — sera complété quand on ajoute les sections)
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+menuToggle.addEventListener('click', () => {
+  navLinks.classList.toggle('mobile-open');
+});
+
+// Scroll reveal : les éléments .reveal apparaissent au défilement
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      // léger délai en cascade pour les éléments d'un même groupe
+      setTimeout(() => entry.target.classList.add('in'), (i % 4) * 80);
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// Modale choix du salon : les boutons .js-rdv ouvrent la modale au lieu d'aller direct sur Planity
+const salonModal = document.getElementById('salonModal');
+const salonModalClose = document.getElementById('salonModalClose');
+
+function openSalonModal() {
+  salonModal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeSalonModal() {
+  salonModal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.querySelectorAll('.js-rdv').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    // ferme le menu mobile si ouvert
+    navLinks.classList.remove('mobile-open');
+    openSalonModal();
+  });
+});
+
+salonModalClose.addEventListener('click', closeSalonModal);
+salonModal.addEventListener('click', (e) => {
+  if (e.target === salonModal) closeSalonModal();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && salonModal.classList.contains('open')) closeSalonModal();
+});
+</script>
+
+</body>
+</html>
